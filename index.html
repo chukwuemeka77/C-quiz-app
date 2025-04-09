@@ -1,149 +1,94 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>C++ OOP Quiz, Worksheet & Assignment</title>
+  <title>C++ Quiz Submission</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script>
-    emailjs.init("j2rq91VFgCU-lB7iX");
-  </script>
   <style>
-    .quiz-container { max-width: 800px; margin: auto; padding: 30px; }
-    #timer { font-size: 1.2rem; font-weight: bold; display: none; }
-    #quizForm, #worksheet, .assignment-section { display: none; }
-    textarea { width: 100%; height: 120px; }
+    .container { max-width: 800px; margin: auto; padding: 30px; }
+    textarea { width: 100%; height: 100px; }
   </style>
 </head>
 <body class="bg-light">
-  <div class="quiz-container bg-white shadow rounded p-4 mt-5">
-    <h2 class="text-center mb-4">C++ OOP Quiz</h2>
+  <div class="container bg-white shadow rounded p-4 mt-5">
+    <h2 class="text-center mb-4">C++ Quiz & Worksheet</h2>
+    <form name="submission" method="POST" data-netlify="true" action="/thank-you.html">
+      <input type="hidden" name="form-name" value="submission">
 
-    <!-- Student Info Form -->
-    <form id="studentInfo" class="mb-4">
       <div class="mb-3">
-        <label for="studentName" class="form-label">Name</label>
-        <input type="text" id="studentName" class="form-control" required>
+        <label class="form-label">Name</label>
+        <input type="text" name="name" class="form-control" required>
       </div>
       <div class="mb-3">
-        <label for="studentEmail" class="form-label">Email</label>
-        <input type="email" id="studentEmail" class="form-control" required>
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" required>
       </div>
-      <button type="button" class="btn btn-primary w-100" onclick="startQuiz()">Start Quiz</button>
+
+      <hr>
+      <h5>Quiz Section (MCQ)</h5>
+      <p>1. What is the purpose of a constructor in C++?</p>
+      <select name="q1" class="form-select mb-3">
+        <option value="">Select an answer</option>
+        <option>A) To destroy an object</option>
+        <option>B) To initialize an object</option>
+        <option>C) To print object data</option>
+        <option>D) To access private members</option>
+      </select>
+
+      <p>2. Which keyword is used to create a class variable shared across all objects?</p>
+      <select name="q2" class="form-select mb-3">
+        <option value="">Select an answer</option>
+        <option>A) const</option>
+        <option>B) shared</option>
+        <option>C) static</option>
+        <option>D) global</option>
+      </select>
+
+      <p>3. What does the <code>this</code> pointer refer to?</p>
+      <select name="q3" class="form-select mb-3">
+        <option value="">Select an answer</option>
+        <option>A) The class name</option>
+        <option>B) The base class</option>
+        <option>C) The current object</option>
+        <option>D) The constructor</option>
+      </select>
+
+      <p>4. A destructor can have parameters.</p>
+      <select name="q4" class="form-select mb-3">
+        <option value="">Select an answer</option>
+        <option>True</option>
+        <option>False</option>
+      </select>
+
+      <p>5. Public members of a class can be accessed directly by objects.</p>
+      <select name="q5" class="form-select mb-3">
+        <option value="">Select an answer</option>
+        <option>True</option>
+        <option>False</option>
+      </select>
+
+      <hr>
+      <h5>Worksheet Section</h5>
+      <label>1. A ________ is used to release memory or resources when an object is destroyed.</label>
+      <input name="blank1" class="form-control mb-3">
+
+      <label>2. The <code>static</code> keyword in a class defines a ________ member.</label>
+      <input name="blank2" class="form-control mb-3">
+
+      <label>3. An object is an ________ of a class.</label>
+      <input name="blank3" class="form-control mb-3">
+
+      <label>4. Write a simple class Book with a method displayDetails().</label>
+      <textarea name="bookClass" class="form-control mb-3"></textarea>
+
+      <label>5. Write a constructor for a class Rectangle.</label>
+      <textarea name="rectangleConstructor" class="form-control mb-3"></textarea>
+
+      <hr>
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
-
-    <div id="timer" class="text-end text-danger mb-3">Time Left: <span id="time">45:00</span></div>
-
-    <form id="quizForm">
-      <!-- Quiz questions go here (unchanged) -->
-    </form>
-
-    <!-- Result & Download -->
-    <div id="result" class="mt-4 text-center fw-bold"></div>
-    <div id="answerKey" class="mt-2 text-start"></div>
-    <a id="downloadLink" class="btn btn-success mt-3 w-100 d-none" download="quiz_result.txt">Download Result</a>
-
-    <!-- Worksheet Section -->
-    <form id="worksheet">
-      <!-- Worksheet inputs go here (unchanged) -->
-    </form>
-
-    <!-- Assignment Section -->
-    <div class="assignment-section">
-      <!-- Assignment iframe goes here (unchanged) -->
-    </div>
   </div>
-
-  <script>
-    let totalSeconds = 2700;
-    let timerInterval;
-
-    function startQuiz() {
-      const name = document.getElementById("studentName").value.trim();
-      const email = document.getElementById("studentEmail").value.trim();
-      if (!name || !email) {
-        alert("Please enter your name and email.");
-        return;
-      }
-
-      document.getElementById("studentInfo").style.display = "none";
-      document.getElementById("quizForm").style.display = "block";
-      document.getElementById("worksheet").style.display = "block";
-      document.querySelector(".assignment-section").style.display = "block";
-      document.getElementById("timer").style.display = "block";
-
-      timerInterval = setInterval(() => {
-        if (totalSeconds <= 0) {
-          clearInterval(timerInterval);
-          submitQuiz();
-        } else {
-          totalSeconds--;
-          const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-          const secs = (totalSeconds % 60).toString().padStart(2, '0');
-          document.getElementById("time").innerText = `${mins}:${secs}`;
-        }
-      }, 1000);
-    }
-
-    function submitQuiz() {
-      clearInterval(timerInterval);
-      let score = 0;
-      const correctAnswers = {
-        q1: "B",
-        q2: "C",
-        q3: "C",
-        q4: "False",
-        q5: "True"
-      };
-
-      const userAnswers = {};
-      for (let key in correctAnswers) {
-        let radios = document.getElementsByName(key);
-        for (let radio of radios) {
-          if (radio.checked) {
-            userAnswers[key] = radio.value;
-            if (radio.value === correctAnswers[key]) {
-              score++;
-            }
-          }
-        }
-      }
-
-      document.getElementById("result").innerText = `You scored ${score} out of 5.`;
-
-      let answerReview = '<h5>Answer Review:</h5><ul>';
-      for (let key in correctAnswers) {
-        answerReview += `<li><strong>Q${key.slice(1)}:</strong> Correct Answer - ${correctAnswers[key]} | Your Answer - ${userAnswers[key] || 'No Answer'}</li>`;
-      }
-      answerReview += '</ul>';
-      document.getElementById("answerKey").innerHTML = answerReview;
-
-      const name = document.getElementById("studentName").value;
-      const email = document.getElementById("studentEmail").value;
-
-      let fileContent = `C++ OOP Quiz Result\nName: ${name}\nEmail: ${email}\nScore: ${score}/5\n\nAnswer Review:\n`;
-      for (let key in correctAnswers) {
-        fileContent += `Q${key.slice(1)}: Correct - ${correctAnswers[key]}, Your Answer - ${userAnswers[key] || 'No Answer'}\n`;
-      }
-
-      const blob = new Blob([fileContent], { type: 'text/plain' });
-      const downloadLink = document.getElementById("downloadLink");
-      downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.classList.remove("d-none");
-
-      emailjs.send("service_u9bt8rn", "template_z5jwa4h", {
-        student_name: name,
-        student_email: email,
-        score: `${score}/5`,
-        answer_details: fileContent
-      }).then(() => {
-        alert("Your results were sent successfully!");
-      }).catch((error) => {
-        alert("Failed to send results. Please check your Service ID, Template ID, or Public Key.");
-        console.error("EmailJS Error:", error);
-      });
-    }
-  </script>
 </body>
 </html>
