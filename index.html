@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ OOP Quiz, Worksheet & Assignment</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("j2rq91VFgCU-lB7iX");
+  </script>
+  <style>
+    .quiz-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+    }
+    #timer { font-size: 1.2rem; font-weight: bold; }
+    textarea { width: 100%; height: 120px; }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="quiz-container bg-white shadow rounded p-4 mt-5">
+    <h2 class="text-center mb-4">C++ OOP Quiz</h2>
+
+    <!-- Student Info Form -->
+    <form id="studentInfo" class="mb-4">
+      <div class="mb-3">
+        <label for="studentName" class="form-label">Name</label>
+        <input type="text" id="studentName" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="studentEmail" class="form-label">Email</label>
+        <input type="email" id="studentEmail" class="form-control" required>
+      </div>
+    </form>
+
+    <div id="timer" class="text-end text-danger mb-3">Time Left: <span id="time">60</span> seconds</div>
+    <form id="quizForm">
+      <!-- Quiz Questions -->
+      <!-- ... Quiz and worksheet sections go here (unchanged) ... -->
+    </form>
+
+    <!-- Result & Download -->
+    <div id="result" class="mt-4 text-center fw-bold"></div>
+    <div id="answerKey" class="mt-2 text-start"></div>
+    <a id="downloadLink" class="btn btn-success mt-3 w-100 d-none" download="quiz_result.txt">Download Result</a>
+
+    <!-- Worksheet Section -->
+    <!-- ... Worksheet section stays the same ... -->
+
+    <!-- Assignment Section -->
+    <!-- ... Assignment section stays the same ... -->
+  </div>
+
+  <!-- JavaScript Timer + Quiz Logic -->
+  <script>
+    let timeLeft = 60;
+    let timer = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        submitQuiz();
+      } else {
+        document.getElementById("time").innerText = timeLeft;
+        timeLeft--;
+      }
+    }, 1000);
+
+    function submitQuiz() {
+      clearInterval(timer);
+      let score = 0;
+      const correctAnswers = {
+        q1: "B",
+        q2: "C",
+        q3: "C",
+        q4: "False",
+        q5: "True"
+      };
+
+      const userAnswers = {};
+      for (let key in correctAnswers) {
+        let radios = document.getElementsByName(key);
+        for (let radio of radios) {
+          if (radio.checked) {
+            userAnswers[key] = radio.value;
+            if (radio.value === correctAnswers[key]) {
+              score++;
+            }
+          }
+        }
+      }
+
+      // Show result on page
+      document.getElementById("result").innerText = `You scored ${score} out of 5.`;
+
+      let answerReview = '<h5>Answer Review:</h5><ul>';
+      for (let key in correctAnswers) {
+        answerReview += `<li><strong>Q${key.slice(1)}:</strong> Correct Answer - ${correctAnswers[key]} | Your Answer - ${userAnswers[key] || 'No Answer'}</li>`;
+      }
+      answerReview += '</ul>';
+      document.getElementById("answerKey").innerHTML = answerReview;
+
+      // Download file
+      let fileContent = `C++ OOP Quiz Result\nName: ${document.getElementById("studentName").value}\nEmail: ${document.getElementById("studentEmail").value}\nScore: ${score}/5\n\nAnswer Review:\n`;
+      for (let key in correctAnswers) {
+        fileContent += `Q${key.slice(1)}: Correct - ${correctAnswers[key]}, Your Answer - ${userAnswers[key] || 'No Answer'}\n`;
+      }
+
+      const blob = new Blob([fileContent], { type: 'text/plain' });
+      const downloadLink = document.getElementById("downloadLink");
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.classList.remove("d-none");
+
+      // EmailJS Submission
+      emailjs.send("service_u9bt8rn", "template_z5jwa4h", {
+        student_name: document.getElementById("studentName").value,
+        student_email: document.getElementById("studentEmail").value,
+        score: `${score}/5`,
+        answer_details: fileContent
+      }).then(function(response) {
+        alert("Your results were sent successfully!");
+      }, function(error) {
+        alert("Error sending results: " + JSON.stringify(error));
+      });
+    }
+  </script>
+</body>
+      </html>
+  
