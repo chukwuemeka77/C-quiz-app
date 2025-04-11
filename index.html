@@ -1,24 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>C++ Quiz Submission</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .container { max-width: 800px; margin: auto; padding: 30px; }
-    textarea { width: 100%; height: 100px; }
-  </style>
 </head>
 <body class="bg-light">
   <div class="container bg-white shadow rounded p-4 mt-5">
     <h2 class="text-center mb-4">C++ Quiz & Worksheet</h2>
-    <form name="submission" method="POST" data-netlify="true" action="/thank-you.html">
-      <input type="hidden" name="form-name" value="submission">
+
+    <form id="quizForm" action="https://formsubmit.co/chukwuemekanwaoha77@gmail.com" method="POST">
+      <!-- Hidden metadata fields -->
+      <input type="hidden" name="_next" value="https://chukwuemekacpp.netlify.app/thank-you.html">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="quiz_version" value="v1.0">
+      <input type="hidden" name="session_id" value="April2025-SetA">
 
       <div class="mb-3">
-        <label class="form-label">Name</label>
+        <label class="form-label">Full Name</label>
         <input type="text" name="name" class="form-control" required>
       </div>
       <div class="mb-3">
@@ -27,68 +27,70 @@
       </div>
 
       <hr>
-      <h5>Quiz Section (MCQ)</h5>
-      <p>1. What is the purpose of a constructor in C++?</p>
-      <select name="q1" class="form-select mb-3">
-        <option value="">Select an answer</option>
+      <h5>Quiz Section</h5>
+
+      <label>1. What is the purpose of a constructor in C++?</label>
+      <select name="q1" class="form-select mb-3" required>
+        <option value="">Select</option>
         <option>A) To destroy an object</option>
         <option>B) To initialize an object</option>
         <option>C) To print object data</option>
         <option>D) To access private members</option>
       </select>
 
-      <p>2. Which keyword is used to create a class variable shared across all objects?</p>
-      <select name="q2" class="form-select mb-3">
-        <option value="">Select an answer</option>
+      <label>2. Which keyword is used to create a class variable shared across all objects?</label>
+      <select name="q2" class="form-select mb-3" required>
+        <option value="">Select</option>
         <option>A) const</option>
         <option>B) shared</option>
         <option>C) static</option>
         <option>D) global</option>
       </select>
 
-      <p>3. What does the <code>this</code> pointer refer to?</p>
-      <select name="q3" class="form-select mb-3">
-        <option value="">Select an answer</option>
+      <label>3. What does the <code>this</code> pointer refer to?</label>
+      <select name="q3" class="form-select mb-3" required>
+        <option value="">Select</option>
         <option>A) The class name</option>
         <option>B) The base class</option>
         <option>C) The current object</option>
         <option>D) The constructor</option>
       </select>
 
-      <p>4. A destructor can have parameters.</p>
-      <select name="q4" class="form-select mb-3">
-        <option value="">Select an answer</option>
+      <label>4. A destructor can have parameters.</label>
+      <select name="q4" class="form-select mb-3" required>
+        <option value="">Select</option>
         <option>True</option>
         <option>False</option>
       </select>
 
-      <p>5. Public members of a class can be accessed directly by objects.</p>
-      <select name="q5" class="form-select mb-3">
-        <option value="">Select an answer</option>
+      <label>5. Public members of a class can be accessed directly by objects.</label>
+      <select name="q5" class="form-select mb-3" required>
+        <option value="">Select</option>
         <option>True</option>
         <option>False</option>
       </select>
 
       <hr>
       <h5>Worksheet Section</h5>
+
       <label>1. A ________ is used to release memory or resources when an object is destroyed.</label>
-      <input name="blank1" class="form-control mb-3">
+      <input name="blank1" class="form-control mb-3" required>
 
       <label>2. The <code>static</code> keyword in a class defines a ________ member.</label>
-      <input name="blank2" class="form-control mb-3">
+      <input name="blank2" class="form-control mb-3" required>
 
       <label>3. An object is an ________ of a class.</label>
-      <input name="blank3" class="form-control mb-3">
+      <input name="blank3" class="form-control mb-3" required>
 
       <label>4. Write a simple class Book with a method displayDetails().</label>
-      <textarea name="bookClass" class="form-control mb-3"></textarea>
+      <textarea name="bookClass" class="form-control mb-3" required></textarea>
 
       <label>5. Write a constructor for a class Rectangle.</label>
-      <textarea name="rectangleConstructor" class="form-control mb-3"></textarea>
+      <textarea name="rectangleConstructor" class="form-control mb-3" required></textarea>
 
-      <hr>
       <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
   </div>
 </body>
-</html>
+          </html>
+                                          
